@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_push
+  playbook: ./test-playbook.yml
+  diff: true
+  # verbose: 'vvvv'
+  ansible_playbook_bin: ./bin/ansible-playbook
+  ansible_config: ./test/test-ansible.cfg
+  chef_bootstrap_url: nil
+  use_instance_name: true
+
+platforms:
+  - name: ubuntu/focal64
+
+suites:
+  - name: test

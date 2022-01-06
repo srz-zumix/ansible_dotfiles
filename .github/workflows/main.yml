@@ -1,0 +1,21 @@
+name: GitHub Actions
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  playbook:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: "true"
+      - name: init
+        run: make init
+      - name: playbook
+        run: make playbook
