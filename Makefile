@@ -1,4 +1,5 @@
 PYTHON:=python
+PIP:=./bin/pip
 
 #
 # help
@@ -10,15 +11,15 @@ pyvenv.cfg:
 	${PYTHON} -m venv .
 
 bin/ansible: pyvenv.cfg requirements.txt
-	./bin/pip3 install -r requirements.txt
+	${PIP} install -r requirements.txt
 bin/ansible-lint: bin/ansible
 bin/ansible-vault: bin/ansible
 bin/ansible-playbook: bin/ansible
 
 reinstall_ansible:
-	./bin/pip3 uninstall -y ansible
-	./bin/pip3 uninstall -y ansible-base
-	./bin/pip3 install -r requirements.txt
+	${PIP} uninstall -y ansible
+	${PIP} uninstall -y ansible-base
+	${PIP} install -r requirements.txt
 
 init: pyvenv.cfg bin/ansible bundle_install ## init working directory
 	./bin/ansible-playbook --version
