@@ -19,6 +19,6 @@ jobs:
         with:
           python-version: 3.8
           cache: 'pip'
-      - run: pip install -r requirements.txt
+      - run: pip install -e -r requirements.txt
       - name: playbook
         run: make playbook
