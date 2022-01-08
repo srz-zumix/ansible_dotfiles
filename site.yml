@@ -2,3 +2,4 @@
 - hosts: local_machine
   roles:
     - role: dotfiles
+    - role: shellcp
