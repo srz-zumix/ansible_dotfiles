@@ -1,0 +1,6 @@
+- name: Install/Upgrade common apt packages
+  apt:
+    name: "{{ common_apt_packages }}"
+    state: latest
+    update_cache: yes
+  become: true

@@ -1,0 +1,16 @@
+---
+# tasks file for dotfiles
+
+- name: Checkout dotfiles
+  git:
+    repo: https://github.com/srz-zumix/dotfiles.git
+    dest: "{{ dotfiles_path }}"
+
+- name: Install dotfiles
+  shell:
+    cmd: "bash {{ dotfiles_path }}/install.sh"
+    chdir: "{{ dotfiles_path }}"
+  register: install_result
+
+- debug:
+    msg: "{{ install_result.stdout }}"

@@ -1,0 +1,3 @@
+---
+# defaults file for dotfiles
+dotfiles_path: "{{ ansible_env.HOME }}/dotfiles"
