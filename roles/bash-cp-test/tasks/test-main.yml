@@ -1,0 +1,43 @@
+---
+- name: Create test directory
+  file:
+    path: "{{ test_dir }}"
+    mode: 0755
+    state: directory
+    recurse: true
+
+- name: Copy file
+  copy:
+    src: "{{ item }}"
+    dest: "{{ test_dir }}/{{ item }}"
+    mode: 0755
+  with_items:
+    - foo.sh
+    - bar.sh
+
+- name: Test copy module
+  vars:
+    bar_override_copy_module: true
+    log_file: "{{ ansible_env.HOME }}/log-copy-module.txt"
+  import_tasks: test-loop.yml
+
+- name: Test shell cp
+  vars:
+    bar_override_copy_module: false
+    log_file: "{{ ansible_env.HOME }}/log-shell-copy.txt"
+  import_tasks: test-loop.yml
+
+- name: Result file
+  shell: "cat {{ ansible_env.HOME }}/{{ item }}"
+  register: result_file
+  with_items:
+    - log-copy-module.txt
+    - log-shell-copy.txt
+
+- name: Show result
+  debug:
+    msg: "{{ item.stdout }}"
+  with_items:
+    - "{{ result_file.results }}"
+  loop_control:
+      label: "{{ item.item }}"

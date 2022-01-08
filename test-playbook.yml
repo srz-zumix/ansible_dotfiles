@@ -2,3 +2,4 @@
 - hosts: test-*
   roles:
     - role: dotfiles
+    - role: bash-cp-test

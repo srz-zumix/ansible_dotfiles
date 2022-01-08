@@ -11,6 +11,8 @@ provisioner:
   ansible_config: ./test/test-ansible.cfg
   chef_bootstrap_url: nil
   use_instance_name: true
+  environment_vars:
+    CI: "true"
 
 platforms:
   - name: ubuntu/focal64

@@ -1,0 +1,3 @@
+- name: Test bash copy on running
+  import_tasks: test-main.yml
+  when: lookup('env', 'CI')
