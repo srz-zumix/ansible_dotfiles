@@ -2,4 +2,3 @@
 - hosts: test-*
   roles:
     - role: dotfiles
-    - role: shellcp
