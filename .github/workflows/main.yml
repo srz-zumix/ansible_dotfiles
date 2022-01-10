@@ -25,4 +25,4 @@ jobs:
           cache: 'pip'
       - run: pip install -r requirements.txt
       - name: playbook
-        run: ansible-playbook -i hosts site.yml 
+        run: ansible-playbook -i hosts site.yml

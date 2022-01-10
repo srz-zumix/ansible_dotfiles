@@ -1,0 +1,56 @@
+---
+
+- name: Copy foo.sh to test.sh
+  copy:
+    src: "foo.sh"
+    dest: "{{ test_dir }}/test.sh"
+    mode: 0755
+
+- name: ls
+  command: ls -i {{ test_dir }}
+  register: inode1
+
+- name: Run
+  shell: "{{ test_dir }}/test.sh > {{ log_file }}"
+  register: result_check
+  async: 60
+  poll: 0
+
+- name: Override bar (cp)
+  shell: "cp {{ test_dir }}/bar.sh {{ test_dir }}/test.sh"
+  when: not bar_override_copy_module
+
+- name: Override bar (copy module)
+  copy:
+    src: "bar.sh"
+    dest: "{{ test_dir }}/test.sh"
+    mode: 0755
+  when: bar_override_copy_module
+
+- name: ls
+  command: ls -i {{ test_dir }}
+  register: inode2
+
+- name: wait
+  async_status:
+    jid: "{{ result_check.ansible_job_id }}"
+  register: async_poll_results
+  until: async_poll_results.finished
+  retries: 30
+  delay: 1
+
+- name: Result file
+  shell: "cat {{ log_file }}"
+  register: result_file
+
+- name: Show inode (before)
+  debug:
+    var: inode1.stdout
+
+- name: Show inode (after)
+  debug:
+    var: inode2.stdout
+
+- name: Show result
+  debug:
+    msg: "{{ result_file.stdout }}"
