@@ -18,12 +18,21 @@
 - name: Test copy module
   vars:
     bar_override_copy_module: true
+    bar_override__copy_module_remote_src: false
     log_file: "{{ ansible_env.HOME }}/log-copy-module.txt"
+  import_tasks: test-loop.yml
+
+- name: Test copy module (remote_src)
+  vars:
+    bar_override_copy_module: true
+    bar_override__copy_module_remote_src: true
+    log_file: "{{ ansible_env.HOME }}/log-copy-module-remote-src.txt"
   import_tasks: test-loop.yml
 
 - name: Test shell cp
   vars:
     bar_override_copy_module: false
+    bar_override__copy_module_remote_src: false
     log_file: "{{ ansible_env.HOME }}/log-shell-copy.txt"
   import_tasks: test-loop.yml
 
@@ -32,6 +41,7 @@
   register: result_file
   with_items:
     - log-copy-module.txt
+    - log-copy-module-remote-src.txt
     - log-shell-copy.txt
 
 - name: Show result

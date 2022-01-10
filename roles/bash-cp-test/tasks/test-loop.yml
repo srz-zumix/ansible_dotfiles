@@ -25,7 +25,19 @@
     src: "bar.sh"
     dest: "{{ test_dir }}/test.sh"
     mode: 0755
-  when: bar_override_copy_module
+  when: 
+    - bar_override_copy_module
+    - not bar_override__copy_module_remote_src
+
+- name: Override bar (copy module) (remote_src)
+  copy:
+    remote_src: true
+    src: "{{ test_dir }}/bar.sh"
+    dest: "{{ test_dir }}/test.sh"
+    mode: 0755
+  when:
+    - bar_override_copy_module
+    - bar_override__copy_module_remote_src
 
 - name: ls
   command: ls -i {{ test_dir }}
