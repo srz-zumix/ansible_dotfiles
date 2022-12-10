@@ -2,3 +2,7 @@
   when:
     - ansible_os_family != 'Darwin'
     - ansible_os_family != 'Windows'
+
+- import_tasks: macos/install.yml
+  when:
+    - ansible_os_family == 'Darwin'

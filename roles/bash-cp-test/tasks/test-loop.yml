@@ -18,7 +18,15 @@
 
 - name: Override bar (cp)
   shell: "cp {{ test_dir }}/bar.sh {{ test_dir }}/test.sh"
-  when: not bar_override_copy_module
+  when: 
+    - bar_override_shell_cp
+    - not bar_override_copy_module
+
+- name: Override bar (mv)
+  shell: "mv -f {{ test_dir }}/bar.sh {{ test_dir }}/test.sh"
+  when: 
+    - not bar_override_shell_cp
+    - not bar_override_copy_module
 
 - name: Override bar (copy module)
   copy:
@@ -27,7 +35,7 @@
     mode: 0755
   when: 
     - bar_override_copy_module
-    - not bar_override__copy_module_remote_src
+    - not bar_override_copy_module_remote_src
 
 - name: Override bar (copy module) (remote_src)
   copy:
@@ -37,7 +45,7 @@
     mode: 0755
   when:
     - bar_override_copy_module
-    - bar_override__copy_module_remote_src
+    - bar_override_copy_module_remote_src
 
 - name: ls
   command: ls -i {{ test_dir }}
