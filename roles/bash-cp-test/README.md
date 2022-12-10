@@ -12,4 +12,11 @@
 
 ## 結果
 
-ansible の copy module はこの問題はお気なさそうです。安心して使えますね。
+![result](https://user-images.githubusercontent.com/1439172/206874423-6986bc9f-fda5-4005-a872-b331bb2bd343.png)
+
+ansible の copy module はこの問題は起きませんでした。安心して使えますね。
+処理的には python の os.rename でファイル更新しています。
+[atomic_move](https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/basic.py#L1653)
+ファイル更新する処理は大抵 automic_move を使ってそうなので copy module 以外もおそらく大丈夫なはず。
+
+もしなんらかスクリプトを実行してその中でコピーする場合は `mv -f` 使ったほうが良さそう。
