@@ -17,6 +17,7 @@
 ansible の copy module はこの問題は起きませんでした。安心して使えますね。
 処理的には python の os.rename でファイル更新しています。
 [atomic_move](https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/basic.py#L1653)
+
 ファイル更新する処理は大抵 automic_move を使ってそうなので copy module 以外もおそらく大丈夫なはず。
 
 もしなんらかスクリプトを実行してその中でコピーする場合は `mv -f` 使ったほうが良さそう。
